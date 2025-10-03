@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Calculator App</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    h1 {
+      background: #000;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    input {
+      width: 80px;
+      padding: 6px;
+      margin: 8px;
+      text-align: center;
+    }
+    .btn {
+      background: #0056d6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .cards {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .card {
+      flex: 1;
+      min-width: 150px;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .room { background: #2c65b4; }
+    .acc { background: #3ca64b; }
+    .emer { background: #008080; }
+    .save { background: #c2185b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Budget Calculator App</h1>
+    <p>Enter Amount that you want to Manage</p>
+    <input id="totalAmount" type="number" value="15000"><br><br>
+    <p>How would you like to divide your money?</p>
+    <label>Room Rent(%)</label>
+    <input id="pctRoom" type="number" value="35">
+    <label>Accessories(%)</label>
+    <input id="pctAcc" type="number" value="15">
+    <label>Emergency(%)</label>
+    <input id="pctEmerg" type="number" value="20">
+    <label>Saving(%)</label>
+    <input id="pctSave" type="number" value="30"><br>
+    <button class="btn" id="evalMoney">Evaluate My Money</button>
+    <div class="cards" id="budgetResult" style="display:none;">
+      <div class="card room" id="roomCard"></div>
+      <div class="card acc" id="accCard"></div>
+      <div class="card emer" id="emerCard"></div>
+      <div class="card save" id="saveCard"></div>
+    </div>
+  </div>
+<script>
+$(document).ready(function(){
+  $('#evalMoney').click(function(){
+    let total = parseFloat($('#totalAmount').val()) || 0;
+    const pr = parseFloat($('#pctRoom').val()) || 0;
+    const pa = parseFloat($('#pctAcc').val()) || 0;
+    const pe = parseFloat($('#pctEmerg').val()) || 0;
+    const ps = parseFloat($('#pctSave').val()) || 0;
+    const sumPct = pr+pa+pe+ps;
+    if(sumPct !== 100){
+      alert("Percentages must add up to 100. Current total = "+sumPct+"%");
+      return;
+    }
+    const r = total*pr/100;
+    const a = total*pa/100;
+    const e = total*pe/100;
+    const s = total*ps/100;
+    $('#roomCard').text("Room Rent\nRs."+r.toFixed(2));
+    $('#accCard').text("Accessories\nRs."+a.toFixed(2));
+    $('#emerCard').text("Emergency\nRs."+e.toFixed(2));
+    $('#saveCard').text("Saving\nRs."+s.toFixed(2));
+    $('#budgetResult').show();
+  });
+});
+</script>
+</body>
+</html>
